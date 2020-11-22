@@ -1228,6 +1228,13 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
+    /* print the name of the current buffer */
+    if (string_strcasecmp (argv[1], "showname") == 0)
+    {
+        gui_chat_printf (buffer, "%s", gui_buffer_get_short_name(buffer));
+        return WEECHAT_RC_OK;
+    }
+
     /* relative jump '-' */
     if (argv[1][0] == '-')
     {
@@ -7135,6 +7142,7 @@ command_init ()
         NULL, "buffer",
         N_("manage buffers"),
         N_("list"
+           " || showname"
            " || add [-free] [-switch] <name>"
            " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
            " || move <number>|-|+"
@@ -7152,6 +7160,7 @@ command_init ()
            " || get <property>"
            " || <number>|-|+|<name>"),
         N_("    list: list buffers (without argument, this list is displayed)\n"
+           "showname: print the name of the current buffer in the current buffer\n"
            "     add: add a new buffer (it can be closed with \"/buffer close\" "
            "or input \"q\")\n"
            "   clear: clear buffer content (number for a buffer, -merged for "
@@ -7233,6 +7242,7 @@ command_init ()
         " || renumber %(buffers_numbers) %(buffers_numbers) %(buffers_numbers)"
         " || close %(buffers_plugins_names)|%*"
         " || list"
+        " || showname"
         " || notify reset|none|highlight|message|all"
         " || localvar %(buffers_numbers)|%(buffers_plugins_names)"
         " || set %(buffer_properties_set)"
